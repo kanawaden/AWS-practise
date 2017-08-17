@@ -9,6 +9,7 @@ SQS long polling is a way to retrieve messages from the SQS queues. While the tr
 Maximum Long Poll Time Out = 20 seconds
 SQS Fanning Out – Create an SNS topic first using SNS. Then create and subscribe multiple SQS queues to the SNS topic. Now whenever a message is sent to the SNS topic, the message will be fanned out to the SQS queues, i.e. SNS will deliver the message to all the SQS queues that are subscribed to the topic.
 FIFO (First-In-First-Out) queues are available in the US East (N.Virginia), US East (Ohio), US West (Oregon) and EU (Ireland) region only.
+
 SNS – Simple Notification Service
 Instantaneous, push-based delivery (no polling)
 Protocols include:
@@ -19,6 +20,7 @@ Protocols include:
 -	Amazon SQS
 -	Application
 Message can be customized for each protocol.
+
 SWF – Simple Workflow Service
 Amazon SWF is a web service that makes it easy to coordinate work across distributed application components. Amazon SWF enables applications for a range of use cases, including media processing, web application back-ends, business process workflows, and analytics pipeline, to be designed as a coordination of tasks. Tasks represent invocations of various processing steps in an application which can be performed by executable code, web service calls, human actions, and scripts.
 SWF Workers – are programs that interact with Amazon SWF to get tasks, process received tasks, and returns the results.
@@ -37,6 +39,7 @@ SWF Vs SQS
 •	Amazon SWF presents a task-oriented API, whereas Amazon SQS offers a message-oriented API.
 •	Amazon SWF ensures that a task is assigned only once and is never duplicated. With Amazon SQS, you need to handle duplicated messages and may also need to ensure that a message is processed only once.
 •	Amazon SWF keeps track of all the tasks and events in an application. With Amazon SQS, you need to implement your own application-level tracking, especially if your application uses multiple queues.
+
 AWS CloudFormation
 AWS CloudFormation is a service that gives developers and businesses an easy way to create a collection of related 	AWS resources and provision them in an orderly and predictable fashion.
 The template of cloud formation is a JSON or YAML format.
@@ -53,6 +56,7 @@ Types of instances:
 •	Reserved
 •	Dedicated Host
 In case of spot instances, if you terminate the instance, you pay for the hour. If AWS terminates the spot instance, you get the our it was terminated for free.
+
 EBS
 EBS Consist of:
 •	SSD, General Purpose – GP2 - (up to 10,000 IOPS)
@@ -89,8 +93,10 @@ Instance store volumes cannot be stopped. If the underling host fails, you will 
 EBS backed instances can be stopped. You will not lose the data on this instance if it is topeed.
 You can reboot both, you will not lose your data.
 By default both ROOT volumes will be deleted on termination, however with EBS volumes, you can tell AWS to keep the root device volume.
+
 Amazon Machine Images
 AMI’s are regional. You can only launch an AMI from the region in which it is stored. However you can copy AMI’s to other regions using the console, command line or the Amazon EC2 API.
+
 Cloud Watch
 Standard Monitoring = 5 minutes
 Detailed Monitoring = 1 minutes
@@ -101,6 +107,7 @@ With CloudWatch you can create:
 •	Alarms – Allows you to set Alarms that notify you when particular thresholds are hit.
 •	Events – CloudWatch Events helps you to respond to state changes in your AWS resources.
 •	Logs – helps you to aggregate, monitor and store logs.
+
 Roles
 Roles are more secure than storing your access key and secret access key on individual EC2 instances.
 Roles are easier to manage.
@@ -109,6 +116,7 @@ Roles are universal, you can use them in any region.
 Instance metadata
 Used to get information about an instance (such as public ip)
 http://169.254.169.254/latest/meta-data/
+
 EFS Features
 Supports the Network File System version 4 (NFSv4 protocol)
 You only pay for the storage you use (no pre-provisioning required)
@@ -116,6 +124,7 @@ Can scale up to the petabytes.
 Can support thousands of concurrent NFS connections
 Data is stored across multiple AZ’s within a region.
 Read After Write Consistency.
+
 Lambda
 AWS Lambda is a compute service where you can upload your code and create a Lambda function. AWS Lambda takes care of provisioning and managing the servers that you use to run the code. You don’t have to worry about the operating systems, patching, scaling etc. You can use Lambda in the following ways:
 •	As an event-driven compute service where AWS Lambda runs your code in response to events. These events could be changes to data in an Amazon S3 bucket or an Amazon DynamoDB table.
@@ -152,17 +161,20 @@ o	The bucket name cannot contain underscores, end with a dash, have consecutive 
 o	The bucket name cannot be formatted as an IP address (198.51.100.24)
 Read after Write consistency for PUTS of new Objects
 Eventual Consistency for overwrite PUTS and DELETES (can take some time to propagate)
+
 S3 Storage Classes/Tiers
 •	S3 (durable, immediately available, frequently accessed)
 •	S3 – IA (durable, immediately available, infrequently accessed)
 •	S3 – Reduced Redundancy Storage (data is easily reproducible, such as thumb nails etc.)
 •	Glacier – Archieved data, where you can wait 3 – 5 hours before accessing.
+
 Code fundamental of S3
 •	Key (name)
 •	Value (data)
 •	Version ID
 •	Metadata
 •	Access control list
+
 S3 – Versioning
 Stores all versions of an object (including all writes and even if you delete an object)
 Great backup tool
@@ -170,6 +182,7 @@ Once enabled, versioning cannot be disabled, only suspended.
 Integrated with Lifecycle rules.
 Versioning’s MFA Delete capability, which uses multi-factor authentication, can be used to provide an additional layer of security.
 Cross Region Replication, requires versioning enabled on the source bucket.
+
 S3 – Lifecycle Management
 Can be used in conjunction with versioning.
 Can be applied to current versions and previous versions
@@ -177,6 +190,7 @@ Following actions can now be done;
 •	Transition to standard – Infrequent Access Storage Class (128kb and 30 days after the creation date)
 •	Archieve to the Glacier Storage Class (30 days after IA, if relevant)
 •	Permanently Delete.
+
 CloudFront
 Edge Location – This is the location where content will be cached. This is separate to an AWS Region/AZ
 Origin – This is the origin of all the files that the CDN will distribute. This can be either an S3 Bucket, an EC2 Instance, and Elastic Load Balancer or Route53.
@@ -191,6 +205,7 @@ By default, all newly created buckets are PRIVATE
 You can setup access control to your buckets using;
 •	Bucket Policies
 •	Access Control Lists
+
 S3 buckets can be configured to create access logs which log all requests made to the S3 bucket. This can be done to another bucket.
 Encryption
 In Transit
@@ -266,6 +281,7 @@ When can you apply secondary indexes to the table?
 How many global indexes are allowed per table?
 What is the maxinmum limit for the size of an item collection in DynamoDB?
 What is the smallest no of reserved capacity that can be purchased for DynamoDB?
+
 VPC (Virtual Private Cloud)
 1 subnet = 1 Availability Zone
 Security Groups is stateful & Network ACL is Stateless.
