@@ -1,0 +1,306 @@
+SQS – Simple Queue Service
+SQS messages can be delivered multiple times and in any order.
+Default visibility Time Out is 30 seconds
+Maximum Time Out is 12 hours
+The maximum size of the SQS message is 256KB.
+When you receive a message from a queue and begin processing it, you may find the visibility timeout for the queue is insufficient to fully process and delete that message. To give yourself more time to process the message, you can extend its visibility timeout by using the ChangeMessageVisibility action to specify a new timeout value. Amazon SQS restarts the timeout period using the new value.
+If ChangeMessageVisibility is used to request more time when the visibility timeout is not enough. ReceiveMessageWaitTimeSeconds is used to set the short/long polling
+SQS long polling is a way to retrieve messages from the SQS queues. While the traditional SQS short polling returns immediately, even if the queue being polled is empty, SQS long polling doesn’t return a response until a message arrives in the queue, or the long poll times out. SQS long polling makes it easy from your SQS queue as soon they are available.
+Maximum Long Poll Time Out = 20 seconds
+SQS Fanning Out – Create an SNS topic first using SNS. Then create and subscribe multiple SQS queues to the SNS topic. Now whenever a message is sent to the SNS topic, the message will be fanned out to the SQS queues, i.e. SNS will deliver the message to all the SQS queues that are subscribed to the topic.
+FIFO (First-In-First-Out) queues are available in the US East (N.Virginia), US East (Ohio), US West (Oregon) and EU (Ireland) region only.
+SNS – Simple Notification Service
+Instantaneous, push-based delivery (no polling)
+Protocols include:
+-	HTTP
+-	HTTPS
+-	Email
+-	Email-JSON
+-	Amazon SQS
+-	Application
+Message can be customized for each protocol.
+SWF – Simple Workflow Service
+Amazon SWF is a web service that makes it easy to coordinate work across distributed application components. Amazon SWF enables applications for a range of use cases, including media processing, web application back-ends, business process workflows, and analytics pipeline, to be designed as a coordination of tasks. Tasks represent invocations of various processing steps in an application which can be performed by executable code, web service calls, human actions, and scripts.
+SWF Workers – are programs that interact with Amazon SWF to get tasks, process received tasks, and returns the results.
+SWF Decider – is a program that controls the coordination of tasks, i.e their ordering, concurrency, and scheduling according to the application logic.
+SWF Domains – You workflow and activity types and the workflow execution itself are all scoped to a domain. Domains isolate a set of types, executions, and task lists from others within the same account. 
+RegisterDomain – registers a new domain. Below is the request syntax:
+{
+   "description": "string",
+   "name": "string",
+   "workflowExecutionRetentionPeriodInDays": "string"
+}
+
+DescribeDomain – returns information about the specified domain.
+Maximum workflow can be 1 year and the value is always measured in seconds.
+SWF Vs SQS
+•	Amazon SWF presents a task-oriented API, whereas Amazon SQS offers a message-oriented API.
+•	Amazon SWF ensures that a task is assigned only once and is never duplicated. With Amazon SQS, you need to handle duplicated messages and may also need to ensure that a message is processed only once.
+•	Amazon SWF keeps track of all the tasks and events in an application. With Amazon SQS, you need to implement your own application-level tracking, especially if your application uses multiple queues.
+AWS CloudFormation
+AWS CloudFormation is a service that gives developers and businesses an easy way to create a collection of related 	AWS resources and provision them in an orderly and predictable fashion.
+The template of cloud formation is a JSON or YAML format.
+CloudFormation is free to use. You only pay for the AWS resources that are created.
+Yes, you will be charged for resources that were rolled back during a failed stack creation attempt
+Each AWS CloudFormation account is limited to a maximum of 200 stacks.
+There is no limit to the number of templates.
+When you pass the logical ID of an AWS::EC2::Instance object to the intrinsic Ref function, the object’s instanceId is returned.
+
+EC2
+Types of instances:
+•	On Demand
+•	Spot
+•	Reserved
+•	Dedicated Host
+In case of spot instances, if you terminate the instance, you pay for the hour. If AWS terminates the spot instance, you get the our it was terminated for free.
+EBS
+EBS Consist of:
+•	SSD, General Purpose – GP2 - (up to 10,000 IOPS)
+•	SSD, Provisioned IOPS – IO1 – (More than 10,000 IOPS)
+•	HDD, Throughput Optimized – ST1 – frequently accessed workloads
+•	HDD, Cold – SC1 – less frequently accessed data.
+•	HDD, Magnetic – Standard – cheap, infrequently accessed storage.
+You cannot mount EBS volume to multiple EC2 instances use EFS instead.
+Termination Protection is turned off by default, you must turn it on.
+On an EBS-backed instance, the default action is for the root EBS volume to be deleted when the instance is terminated.
+Root Volumes cannot be encrypted by default, you need a third party tool (such as but locker) to encrypt the root volume.
+EBS Volumes can be changed on the fly except for magnetic standard.
+Best practise to stop the EC2 instance and then change the volume. You can change volume types by taking a snapshot and then using the snapshot to create a new volume.
+If you change a volume on the fly you must wait for 6 hours before making any other changes.
+You can scale EBS Volumes up only
+Volumes must be in the same AZ as the EC2 instances.
+Volumes Vs Snapshots
+Volumes exist on EBS
+•	Virtual Hard Disk
+Snapshot exist on S3
+You can take a snapshot of a volume, this will store that volume on S3.
+Snapshots are point in time copies of Volumes.
+Snapshots are incremental, this means that only the blocks that have changed since your last snapshot are moved to S3.
+Volumes Vs Snapshots - Security
+Snapshots of encrypted volumes are encrypted automatically.
+Volumes restored from encrypted snapshots are encrypted automatically.
+You can share snapshots, but only if they are unencrypted.
+•	These snapshots can be shared with other AWS accounts or made public.
+Snapshots of Root Device Volumes
+To create a snapshot for Amazon EBS volumes that serve as root devices, you should stop the instance before taking the snapshot.
+EBS Vs Instance Store
+Instance store volumes are sometimes called Ephemeral Storage
+Instance store volumes cannot be stopped. If the underling host fails, you will lose your data.
+EBS backed instances can be stopped. You will not lose the data on this instance if it is topeed.
+You can reboot both, you will not lose your data.
+By default both ROOT volumes will be deleted on termination, however with EBS volumes, you can tell AWS to keep the root device volume.
+Amazon Machine Images
+AMI’s are regional. You can only launch an AMI from the region in which it is stored. However you can copy AMI’s to other regions using the console, command line or the Amazon EC2 API.
+Cloud Watch
+Standard Monitoring = 5 minutes
+Detailed Monitoring = 1 minutes
+CloudWatch is for performance monitoring
+CloudTrail is for auditing
+With CloudWatch you can create:
+•	Dashboards – Creates awesome dashboards to see what is happening with your AWS environment
+•	Alarms – Allows you to set Alarms that notify you when particular thresholds are hit.
+•	Events – CloudWatch Events helps you to respond to state changes in your AWS resources.
+•	Logs – helps you to aggregate, monitor and store logs.
+Roles
+Roles are more secure than storing your access key and secret access key on individual EC2 instances.
+Roles are easier to manage.
+Roles can be assigned to an EC2 instance AFTER it has been provisioned using both the command line and the AWS console.
+Roles are universal, you can use them in any region.
+Instance metadata
+Used to get information about an instance (such as public ip)
+http://169.254.169.254/latest/meta-data/
+EFS Features
+Supports the Network File System version 4 (NFSv4 protocol)
+You only pay for the storage you use (no pre-provisioning required)
+Can scale up to the petabytes.
+Can support thousands of concurrent NFS connections
+Data is stored across multiple AZ’s within a region.
+Read After Write Consistency.
+Lambda
+AWS Lambda is a compute service where you can upload your code and create a Lambda function. AWS Lambda takes care of provisioning and managing the servers that you use to run the code. You don’t have to worry about the operating systems, patching, scaling etc. You can use Lambda in the following ways:
+•	As an event-driven compute service where AWS Lambda runs your code in response to events. These events could be changes to data in an Amazon S3 bucket or an Amazon DynamoDB table.
+•	As a compute service to run your code in response to HTTP requests using Amazon API Gateway or API calls made using AWS SDKs. 
+
+IAM
+IAM consists of the followings:
+•	Users
+•	Groups
+•	Roles
+•	Policy Documents
+IAM is universal. It does not apply to regions.
+The “root account” is simply the account created when first setup your AWS account. It has complete Admin account.
+New Users have NO permissions when first created.
+New Users are assigned Access Key ID and Secret Access Keys when first created.
+These are not the same as a password. Hence, cannot be used to login in to the AWS console. You can use this to login via the APIs and Command Line however.
+You only get to view these once. If you lose them, you have to regenerate them. So save them in a secure location.
+Always setup Multifactor Authentication on your root account.
+You can create and customise your own password rotation policy.
+
+S3 (Storage)
+S3 is Object based i.e allows you to upload files. Not suitable to install an operating system on.
+Files can be from 0 Bytes to 5TB.
+There is unlimited storage
+Files are stored in Buckets.
+Accounts can have maximum of 100 buckets
+S3 is a universal namespace, that is, names must be unique globally.
+S3 bucket name looks like this:
+https://s3-eu-west-1.amazonaws.com/acloudguru
+Below are the naming conventions for bucket:
+o	The bucket name can be 3 to 63 char long and can contain only lower chars, numbers, periods and dashes.
+o	Each label in the bucket name must start with a lowercase letter or number.
+o	The bucket name cannot contain underscores, end with a dash, have consecutive periods, or use dashes adjacent to periods.
+o	The bucket name cannot be formatted as an IP address (198.51.100.24)
+Read after Write consistency for PUTS of new Objects
+Eventual Consistency for overwrite PUTS and DELETES (can take some time to propagate)
+S3 Storage Classes/Tiers
+•	S3 (durable, immediately available, frequently accessed)
+•	S3 – IA (durable, immediately available, infrequently accessed)
+•	S3 – Reduced Redundancy Storage (data is easily reproducible, such as thumb nails etc.)
+•	Glacier – Archieved data, where you can wait 3 – 5 hours before accessing.
+Code fundamental of S3
+•	Key (name)
+•	Value (data)
+•	Version ID
+•	Metadata
+•	Access control list
+S3 – Versioning
+Stores all versions of an object (including all writes and even if you delete an object)
+Great backup tool
+Once enabled, versioning cannot be disabled, only suspended.
+Integrated with Lifecycle rules.
+Versioning’s MFA Delete capability, which uses multi-factor authentication, can be used to provide an additional layer of security.
+Cross Region Replication, requires versioning enabled on the source bucket.
+S3 – Lifecycle Management
+Can be used in conjunction with versioning.
+Can be applied to current versions and previous versions
+Following actions can now be done;
+•	Transition to standard – Infrequent Access Storage Class (128kb and 30 days after the creation date)
+•	Archieve to the Glacier Storage Class (30 days after IA, if relevant)
+•	Permanently Delete.
+CloudFront
+Edge Location – This is the location where content will be cached. This is separate to an AWS Region/AZ
+Origin – This is the origin of all the files that the CDN will distribute. This can be either an S3 Bucket, an EC2 Instance, and Elastic Load Balancer or Route53.
+Distribution – This is the name given to CDN which consists of a collection of Edge locations.
+•	Web Distribution – Typically used for websites
+•	RTMP – used for media streaming.
+Edge locations are not just READ only, you can write to them too. (ie put an object on to them).
+Objects are cached for the life of the TTL (Time To Live)
+You can clear cached objects, but you will be charged.
+Securing your buckets
+By default, all newly created buckets are PRIVATE
+You can setup access control to your buckets using;
+•	Bucket Policies
+•	Access Control Lists
+S3 buckets can be configured to create access logs which log all requests made to the S3 bucket. This can be done to another bucket.
+Encryption
+In Transit
+•	SSL/TLS
+At Rest
+•	Server Side Encryption
+o	S3 Managed Keys – SSE-E3
+o	AWS Key Management Service, Managed Keys – SSE-KMS
+o	Server Side Encryption With Customer Provided Keys – SSE-C
+•	Client Side Encryption
+File Gateway – For flat files, stored directly on S3.
+Volume Gateway
+•	Stored Volumes – Entire Dataset is stored on site and is asynchronously backed up to S3.
+•	Cached Volumes – Entire Dataset is stored on S3 and the most frequently accessed data is cached on site.
+Gateway Virtual Tape Library (VTL)
+•	Used for backup and uses popular backup applications like NetBackup, Backup exec, Veam etc
+Snowball
+Snowball
+•	Import to S3
+•	Export from S3
+Snowball Edge
+Snowmobile
+
+You can use S3 to host static websites.
+Serverless
+Very Cheap, scales automatically.
+STATIC only, cannot host dynamic sites.
+CORS stands for Cross Origin Resource Sharing.
+Need to enable it on the resources bucket and state the URL for the origin that will be calling the bucket.
+http://mybucketname.s3-website.eu-west-2.amazonaws.com
+https://s3.eu-west-2.amazonaws.com/mybucketname
+Write to S3 – HTTP 200 code for success
+You can load files to S3 much faster by enabling multipart upload.
+S3 bucket policies requires a Principal to be defined.
+
+
+DynamoDB
+Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. Amazon DynamoDB enables customers to offload the administrative burdens of operating and scaling distributed databases to AWS, so they don’t have to worry about hardware provisioning, setup and configuration, throughput capacity planning, replication, software patching, or cluster scaling.
+Stored on SSD storage.
+Spread across 3 geographically distinct data centres.
+Eventual Consistent Reads (default)
+•	Consistency across all copies of data is usually reached within a second. Repeating a read after a short time should return the updated data.
+Strongly Consistent Reads
+•	A strongly consistent read returns a result that reflects all writes that received a successful response prior to the read.
+Two types of primary keys available:
+•	Single Attribute (think unique ID)
+o	Partition Key (Hash Key) composed of one attribute.
+•	Composite (think unique ID and date range)
+o	Partition Key & Sort Key (Hash and Range) composed of two attributes.
+Local Secondary Index	
+o	Has the SAME Partition Key but different Sort Key.
+o	Can only be created when creating a table. They cannot be removed or modified later.
+Global Secondary Index
+o	Has DIFFERENT Partition Key and different Sort Key
+o	Can be created at table creation or added later.
+DynamoDB Streams used to capture any kind of modification of the DynamoDB tables.
+o	If a new item is added to the table, the stream captures an image of the entire item, including all of its attributes.
+o	If an item is updated, the stream captures the “before” and “after” image of any attributes that were modified in the item.
+o	If an item is deleted from the table, the stream captures an image of the entire item before it was deleted.
+A Query operation finds items in a table using only primary key attribute values. You must provide a partition key attribute name and a distinct value to search for.
+A Scan operation examines every item in the table. By default, a Scan returns all of the data attributes for every iteml however, you can use the ProjectionExpression parameter so that the Scan only returns some of the attributes, rather than all of them.
+Try to use Query over Scan as it more efficient.
+Calculating Read Throughput
+(Size of Read rounded to nearest 4KB chunk / 4KB) x no of items = read throughput
+For Eventually Consistent divide by 2 and for Strongly Consistent keep as it is.
+Write Throughput
+
+Steps to authenticate with Federation like Facebook.
+Conditional Writes
+Atomic Counters
+Optimistic Locking is a strategy to ensure that the client-side item that you are updating (or deleting) is the same as the item in DynamoDB.
+When can you apply secondary indexes to the table?
+How many global indexes are allowed per table?
+What is the maxinmum limit for the size of an item collection in DynamoDB?
+What is the smallest no of reserved capacity that can be purchased for DynamoDB?
+VPC (Virtual Private Cloud)
+1 subnet = 1 Availability Zone
+Security Groups is stateful & Network ACL is Stateless.
+Can Peer VPCs both in the same account and with other AWS accounts.
+No Transitive Peering.
+NAT instances
+When creating a NAT instances, Disable Source/Destination Check on the instance.
+NAT instances must be in a public subnet
+Must have an elastic IP address to work.
+There must be a route out of the private subnet to the NAT instance, in order for this to work.
+The amount of traffic that NAT instances supports, depends on the instance size. If you are bottlenecking, increase the instance size.
+You can create high availability using Autoscaling Groups, multiple subnets in different AZ’s and a script to automate failover.
+Behind the security Groups
+NAT Gateways
+Prefered by the enterprise
+Scale automatically up to 10 gbps
+No need to patch
+Not associated with security groups
+Automatically assigns public IP address
+Remember to update you route tables
+No need to disable source/destination check on the NAT Gateway
+Network ACL
+Your VPC automatically comes with a default ACL and by default it allows all outbound and inbound traffic
+You can create a custom network ACL. By default, all custom network ACL denies all inbound and outbound traffic until you add rules.
+Each subnet in your VPC must be associated with a network ACL. If you don’t explicitly associate a subnet with the network ACL, the subnet is automatically associated with the default network ACL.
+You can associate a network ACL with multiple subnets; however, a subnet can be associated with only one network ACL at a time. When you associate a network ACL with a subnet, the previous association is removed.
+A network ACL contains a numbered list of rules that is evaluated in order, starting with the lowest numbered rule.
+A network ACL has separate inbound and outbound rules, and each rule can either allow or deny traffic.
+Network ACLs are stateless; responses to allowed inbound traffic are subject to the rules for outbound traffic (and vice versa)
+Block IP Address using network ACL’s not security group.
+NAT Vs Bastion
+A NAT is used to provide internet traffic to EC2 instances in private subnets.
+A Bastion is used to securely administer EC2 instances (using SSH or RDP) in private subnets. It is also called as jump boxes.
+Resilient Architecture
+If you want resiliency, always have 2 public subnets and 2 private subnets. Make sure each subnet is in different AZ.
+With ELB make sure they are in 2 public subnets in 2 different AZ.
+With Bastion hosts, put them behind an auto scaling group with a minimum size of 2. Use route53 (either round robin or using a health check) to automatically fail over.
+NAT instances are tricky to make resilient. You need 1 in each public subnet, each with their own IP address, and you need to write a script to fail between the two. Instead where possible, use NAT gateways.
