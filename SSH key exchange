@@ -1,0 +1,18 @@
+##########################################################################
+ssh-keygen -t rsa
+
+cat public_key >> authorized_keys
+
+==========================================================================
+Generate keys like above
+> add public key in authorized_keys
+> add private key in source machine
+
+ssh -i <private_key> username@host
+For the first time, it may ask for password. Use changeme for current password.
+==========================================================================
+Make sure in the target machine, below permissions are applied:
+700 to .ssh/
+600 to .ssh/authorized_keys
+
+Next time it should work fine.
