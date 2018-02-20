@@ -34,3 +34,6 @@ RDS
 SQS
 - newly created queue structure : http://sqs.<aws-region>.amazonaws.com/<accountid>/<queue-name>
   for eg : http://sqs.us-east-1.amazonaws.com/123456123456/myqueue
+
+Billing
+- Billing reports provide information about
