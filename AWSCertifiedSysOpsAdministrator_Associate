@@ -8,7 +8,8 @@ AutoScaling
 
 Load Balancer
 - To ensure that a classic load balancer stops sending requests to instances that are deregistered or unhealthy, while keeping the existing connection open, use connection draining. This enables load balancer to complete in-flight requests made to the instances that are deregistered or unhealthy.
-- 
+- When you enable connection draining, you can specify the maximum time for the load balancer to keep the connection live before reporting the instance as deregistered. The maximum timeout value can be set between 1 to 3600 secs(1 hour).
+
 
 
 EC2
@@ -43,6 +44,7 @@ RDS
 SQS
 - newly created queue structure : http://sqs.<aws-region>.amazonaws.com/<accountid>/<queue-name>
   for eg : http://sqs.us-east-1.amazonaws.com/123456123456/myqueue
+- You can configure the amazon SQS message retention period to a value between 1 min to 14 days (default is 4 days). Once the message retention limit is reached, messages are automatically deleted.
 
 Billing
 - Billing reports provide information about your usage of AWS resources and estimated costs for that usage. You can have AWS generated billing reports that break down your estimated costs in different ways:
