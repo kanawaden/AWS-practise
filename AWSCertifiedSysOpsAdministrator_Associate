@@ -1,7 +1,9 @@
 AutoScaling
 - AutoScaling will throw an error when there is conflict in the schedule of 2 seperate autoscaling process. Error is thrown during configuration of the 2nd process itself and it will not allow to save 2nd process.
 - As per Autoscaling, a user can schedule an action upto a month in the future.
-
+- Autoscaling might suspend the processes for Auto Scaling groups that repeatedly fails to launch instances. This is known as an administrative suspension and most commonly applies to Auto Scaling groups that has been trying to launch instances for over 24 hours but have not succeeded in launching any instances.
+- The CLI command update-auto-scaling-group can be used to combine 2 groups.
+- 
 
 
 Load Balancer
@@ -15,9 +17,16 @@ EC2
     => Max key length is 127 unicode chars in UTF-8
     => Max value length is 255 unicode chars in UTF-8
     => Tags keys and values are case sensitive.
-    => Do not use AWS: prefix in your tag names or values because it is reserved for AWS use.
-    
-- 
+    => Do not use AWS: prefix in your tag names or values because it is reserved for AWS use.  
+- When you try to delete a subnet which has instances it will not allow to delete it.
+- For EC2 classic, the Elastic IP is disassociated from the instance when you stop it.
+- You need to ensure you are entering right user name if you get the error "Host Key not found."
+
+CloudFormation
+- You can use WaitCondition for situation like following:
+  => To coordinate the stack resource creation with configuration actions that are external to the stack creation.
+  => To track the status of configuration process.
+
 
 VPC
 - Go through CIDR properly.
@@ -36,4 +45,12 @@ SQS
   for eg : http://sqs.us-east-1.amazonaws.com/123456123456/myqueue
 
 Billing
-- Billing reports provide information about
+- Billing reports provide information about your usage of AWS resources and estimated costs for that usage. You can have AWS generated billing reports that break down your estimated costs in different ways:
+  => By the hour, day or month.
+  => By each account in your organisation.
+  => By product or product resource.
+  => By tags that you define yourself.
+
+CloudWatch
+- You can publish your own metrics to CloudWatch using the AWS CLI or an API.
+
