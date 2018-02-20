@@ -6,3 +6,31 @@ AutoScaling
 
 Load Balancer
 - To ensure that a classic load balancer stops sending requests to instances that are deregistered or unhealthy, while keeping the existing connection open, use connection draining. This enables load balancer to complete in-flight requests made to the instances that are deregistered or unhealthy.
+- 
+
+
+EC2
+- AWS Tags enables you to categorise your AWS resources in different ways. As per AWS below are the restrictions on tags - 
+    => Max no of tags per resource is 50.
+    => Max key length is 127 unicode chars in UTF-8
+    => Max value length is 255 unicode chars in UTF-8
+    => Tags keys and values are case sensitive.
+    => Do not use AWS: prefix in your tag names or values because it is reserved for AWS use.
+    
+- 
+
+VPC
+- Go through CIDR properly.
+- 
+
+
+RDS
+- In a multi AZ deployment, Amazon RDS automatically provisions and maintains a synchronous standby replica in a different Availability Zone. The primary instance is synchronously replicated across AZ to a standby replica to provide data redundancy, eliminate IO freezes and minimizes latency spikes during system backups.
+  As per AWS below are the best practices for multiAZ:
+  => For production workloads, we recommend you use Provisioned IOPS and DB instance classes (m1.large and larger) that are optimized for provisioned IOPS for fast consistent performance.
+  => Also if backups are scheduled during working hours, then I/O can be suspended and increase the latency of the DB, hence it is better to schedule outside office hours.
+-
+
+SQS
+- newly created queue structure : http://sqs.<aws-region>.amazonaws.com/<accountid>/<queue-name>
+  for eg : http://sqs.us-east-1.amazonaws.com/123456123456/myqueue
