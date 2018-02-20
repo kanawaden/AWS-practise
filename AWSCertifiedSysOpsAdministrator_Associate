@@ -1,0 +1,8 @@
+AutoScaling
+- AutoScaling will throw an error when there is conflict in the schedule of 2 seperate autoscaling process. Error is thrown during configuration of the 2nd process itself and it will not allow to save 2nd process.
+- As per Autoscaling, a user can schedule an action upto a month in the future.
+
+
+
+Load Balancer
+- To ensure that a classic load balancer stops sending requests to instances that are deregistered or unhealthy, while keeping the existing connection open, use connection draining. This enables load balancer to complete in-flight requests made to the instances that are deregistered or unhealthy.
