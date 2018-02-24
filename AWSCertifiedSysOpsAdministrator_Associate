@@ -2,6 +2,7 @@ AutoScaling
 - AutoScaling will throw an error when there is conflict in the schedule of 2 seperate autoscaling process. Error is thrown during configuration of the 2nd process itself and it will not allow to save 2nd process.
 - As per Autoscaling, a user can schedule an action upto a month in the future.
 - Autoscaling might suspend the processes for Auto Scaling groups that repeatedly fails to launch instances. This is known as an administrative suspension and most commonly applies to Auto Scaling groups that has been trying to launch instances for over 24 hours but have not succeeded in launching any instances.
+- Autoscaling enables you to suspend and then resume one or more of the Autoscaling processes in ASG. This can be very useful when you want to investigate the configuration problem or other issue with your web application and then make changes into your application without triggering autoscaling process.
 - The CLI command update-auto-scaling-group can be used to combine 2 groups.
 - 
 
@@ -22,6 +23,15 @@ EC2
 - When you try to delete a subnet which has instances it will not allow to delete it.
 - For EC2 classic, the Elastic IP is disassociated from the instance when you stop it.
 - You need to ensure you are entering right user name if you get the error "Host Key not found."
+- 
+
+S3
+- buckets ACL permission
+  => Everyone
+  => Any Authenticated AWS user
+  => Log Delivery
+  => Me
+
 
 CloudFormation
 - You can use WaitCondition for situation like following:
@@ -55,4 +65,5 @@ Billing
 
 CloudWatch
 - You can publish your own metrics to CloudWatch using the AWS CLI or an API.
+- Metrics are updated every five minutes and automatically collected and pushed to CloudWatch for every EMR cluster. This interval is not configurable. There is no charge for the Amazon EMR metrics reported in CloudWatch. Metrics are archived for two weeks, after which the data is discarded.
 
