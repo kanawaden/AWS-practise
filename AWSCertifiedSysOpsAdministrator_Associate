@@ -66,4 +66,6 @@ Billing
 CloudWatch
 - You can publish your own metrics to CloudWatch using the AWS CLI or an API.
 - Metrics are updated every five minutes and automatically collected and pushed to CloudWatch for every EMR cluster. This interval is not configurable. There is no charge for the Amazon EMR metrics reported in CloudWatch. Metrics are archived for two weeks, after which the data is discarded.
-
+- You can aggregate your data before you publish to cloudwatch. When you have multiple data points per minute, aggregating data minimizes the number of calls to put-metric-data.
+  for e.g. aws cloudwatch put-metric-data --metric-name PageViewCount --namespace MyService --statistic-value Sum=11,Minimum=2,Maximum=5 etc
+- The metric you configure with CloudWatch for your Amazon SNS topics are automatically collected and pushed to CloudWatch every 5 minutes.
