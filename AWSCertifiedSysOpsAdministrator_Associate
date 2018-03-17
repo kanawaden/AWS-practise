@@ -11,7 +11,8 @@ Load Balancer
 - To ensure that a classic load balancer stops sending requests to instances that are deregistered or unhealthy, while keeping the existing connection open, use connection draining. This enables load balancer to complete in-flight requests made to the instances that are deregistered or unhealthy.
 - When you enable connection draining, you can specify the maximum time for the load balancer to keep the connection live before reporting the instance as deregistered. The maximum timeout value can be set between 1 to 3600 secs(1 hour).
 
-
+SNS
+- Available Endpoints: HTTP, HTTPS, Email, Email-JSON, Amazon SQS, Application AWS Lambda, SMS
 
 EC2
 - AWS Tags enables you to categorise your AWS resources in different ways. As per AWS below are the restrictions on tags - 
@@ -68,6 +69,7 @@ RDS
   => For production workloads, we recommend you use Provisioned IOPS and DB instance classes (m1.large and larger) that are optimized for provisioned IOPS for fast consistent performance.
   => Also if backups are scheduled during working hours, then I/O can be suspended and increase the latency of the DB, hence it is better to schedule outside office hours.
 - By default AWS rotates the logs so its better to store it in database to ensure you archieve all the logs and you can then have the ability to find the errors by date.
+- If you want to have an encrypted database storage option, you need to store them on EBS volumes which can be encrypted.
 
 SQS
 - newly created queue structure : http://sqs.<aws-region>.amazonaws.com/<accountid>/<queue-name>
@@ -88,3 +90,10 @@ CloudWatch
   for e.g. aws cloudwatch put-metric-data --metric-name PageViewCount --namespace MyService --statistic-value Sum=11,Minimum=2,Maximum=5 etc
 - The metric you configure with CloudWatch for your Amazon SNS topics are automatically collected and pushed to CloudWatch every 5 minutes.
 - In AWS documentation it is clearly mentioned that put-metric-data command has a limit of 8KB for GET and 40KB for POST requests.
+- Available statics in CloudWatch
+  => Average
+  => Minimum
+  => Maximum
+  => Sum
+  => Data Samples
+  
