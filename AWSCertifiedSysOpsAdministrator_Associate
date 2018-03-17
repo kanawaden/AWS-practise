@@ -23,6 +23,9 @@ EC2
 - When you try to delete a subnet which has instances it will not allow to delete it.
 - For EC2 classic, the Elastic IP is disassociated from the instance when you stop it.
 - You need to ensure you are entering right user name if you get the error "Host Key not found."
+- A bastion host is a special purpose computer on a network specifically designed and configured to withstand attacks. The computer generally hosts a single application, for example a proxy server, and all other services are removed or limited to reduce the threat to the computer.
+  In AWS, A bastion host is kept on a public subnet. Users log on to the bastion host via SSH or RDP and then use that session to manage other hosts in the private subnets.
+  You can have a bastion host running in multiple AZ, but the recommendation is to have one running in each AZ. Hence you need to make sure that the Autoscaling group is set to a maz-size of one.
 - 
 
 S3
@@ -41,6 +44,8 @@ CloudFormation
 
 VPC
 - Go through CIDR properly.
+- When you design a web server and db server, the security group must be defined so that the webserver can talk to db server whereas while communicating through subnets you need to define network ACL.
+- Elastic Network Interface is a logical networking component in a VPC that represents a virtual network card.
 - 
 
 
