@@ -10,9 +10,15 @@ AutoScaling
 Load Balancer
 - To ensure that a classic load balancer stops sending requests to instances that are deregistered or unhealthy, while keeping the existing connection open, use connection draining. This enables load balancer to complete in-flight requests made to the instances that are deregistered or unhealthy.
 - When you enable connection draining, you can specify the maximum time for the load balancer to keep the connection live before reporting the instance as deregistered. The maximum timeout value can be set between 1 to 3600 secs(1 hour).
+- Default connection draining time is 300 seconds.
+- Deleting the load balancer will not affect registered targets. Instances will keep on running even after elb deletion.
 
 SNS
 - Available Endpoints: HTTP, HTTPS, Email, Email-JSON, Amazon SQS, Application AWS Lambda, SMS
+
+IAM
+- AWS login URL: https://999988887777.signin.aws.amazon.com/console/
+
 
 EC2
 - AWS Tags enables you to categorise your AWS resources in different ways. As per AWS below are the restrictions on tags - 
@@ -70,11 +76,14 @@ RDS
   => Also if backups are scheduled during working hours, then I/O can be suspended and increase the latency of the DB, hence it is better to schedule outside office hours.
 - By default AWS rotates the logs so its better to store it in database to ensure you archieve all the logs and you can then have the ability to find the errors by date.
 - If you want to have an encrypted database storage option, you need to store them on EBS volumes which can be encrypted.
+- Event Subscription Categories for RDS has below option: Creation, Deletion, Notification and Restoration.
 
 SQS
 - newly created queue structure : http://sqs.<aws-region>.amazonaws.com/<accountid>/<queue-name>
   for eg : http://sqs.us-east-1.amazonaws.com/123456123456/myqueue
 - You can configure the amazon SQS message retention period to a value between 1 min to 14 days (default is 4 days). Once the message retention limit is reached, messages are automatically deleted.
+- When you delete a queue which contains messages. It will just prompt a message showing there are messages in a queue but after which it will just delete the queue.
+-
 
 Billing
 - Billing reports provide information about your usage of AWS resources and estimated costs for that usage. You can have AWS generated billing reports that break down your estimated costs in different ways:
@@ -82,6 +91,7 @@ Billing
   => By each account in your organisation.
   => By product or product resource.
   => By tags that you define yourself.
+- Cost Explorer helps to get more details on spendings.
 
 CloudWatch
 - You can publish your own metrics to CloudWatch using the AWS CLI or an API.
@@ -97,3 +107,5 @@ CloudWatch
   => Sum
   => Data Samples
   
+CloudTrail
+- AWS CloudTrail is the defacto service provided by AWS for monitoring all API calls to AWS and is used for logging and monitoring purposes for compliance. Amazon CloudTrail detects every call made to AWS and creates a log which can then be further used for analysis.
