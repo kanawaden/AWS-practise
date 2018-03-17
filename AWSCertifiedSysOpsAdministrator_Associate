@@ -34,13 +34,26 @@ S3
   => Any Authenticated AWS user
   => Log Delivery
   => Me
+- S3 Analytics (Storage Class Analysis) helps you to analyze storage access patterns and transition the right data to the right storage class. This new S3 Analytics feature automatically identifies infrequest access patterns to help you transition storage to Standard-IA.
+- S3 Object Tags are keyvalue pairs applied to S3 objects which can be created, updated or deleted at any time during the lifetime of the object. With these, you'll have the ability to create Identity and Access Management (IAM) policies, setup S3 lifecycle policies, and customize storage metrics. These object tags can then manage transitions between storage classes and expire objects in the background.
+- S3 Inventory provides a scheduled alternative to Amazon S3's synchronous List API. You can configure S3 Inventory to provide a CSV or ORC file output of your objects and their corresponding metadata on a daily basis for an S3 bucket or prefix. You can simplify and speed up business workflows and big data jobs with S3 Inventory. You can use S3 inventory to verify encryption and replication status of your objects to meet business, compliance, and regulatory needs.
+- S3 Multipart upload advantages:
+  => Improved throughput - you can upload parts in parallel to improve throughput.
+  => Quick recovery from any network issues - smaller part size minimized the impact of restarting a failed upload due to network error.
+  => Pause and resume object uploads - you can upload object parts over time. Once you initiate a multipart upload there is no expirey; you must explicitly complete or abort the multipart upload.
+  => Begin an upload before you know the final object size - you can upload an object as you are creating it.
 
 
 CloudFormation
 - You can use WaitCondition for situation like following:
   => To coordinate the stack resource creation with configuration actions that are external to the stack creation.
   => To track the status of configuration process.
-
+- Elements of CloudFormation template (templates are JSON or YAML formatted text files)
+  => An optional list of template parameters (input values supplied at stack creation time)
+  => An optional list of output values (e.g. the complete URL to a web application)
+  => An optional list of data tables used to lookup static configuration values (e.g AMI names)
+  => The list of AWS resources and their conf value
+  => A template file format version number
 
 VPC
 - Go through CIDR properly.
