@@ -21,6 +21,9 @@ IAM
 - AWS login URL: https://999988887777.signin.aws.amazon.com/console/
 - A group cannot be a part of another group.
 - A groups can be granted permissions using access control policies.
+- The best practise for IAM is to create roles which has specific access to an AWS service and then give the user permission to the AWS service via the role.
+- If its a combination of various services, there will be large number of groups and might not be maintainable. Hence, role for service and ability for user to take up the role and ability to change roles would be much cleaner.
+
 
 EBS
 - Default limit of EBS snapshot is 10,000.
@@ -111,6 +114,7 @@ CloudWatch
   => Maximum
   => Sum
   => Data Samples
-  
+- By default, there would always be network in, network out and CPU Utilization but teh DisRead (bytes) would remain 0.
+
 CloudTrail
 - AWS CloudTrail is the defacto service provided by AWS for monitoring all API calls to AWS and is used for logging and monitoring purposes for compliance. Amazon CloudTrail detects every call made to AWS and creates a log which can then be further used for analysis.
