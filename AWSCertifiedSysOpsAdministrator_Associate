@@ -4,7 +4,8 @@ AutoScaling
 - Autoscaling might suspend the processes for Auto Scaling groups that repeatedly fails to launch instances. This is known as an administrative suspension and most commonly applies to Auto Scaling groups that has been trying to launch instances for over 24 hours but have not succeeded in launching any instances.
 - Autoscaling enables you to suspend and then resume one or more of the Autoscaling processes in ASG. This can be very useful when you want to investigate the configuration problem or other issue with your web application and then make changes into your application without triggering autoscaling process.
 - The CLI command update-auto-scaling-group can be used to combine 2 groups.
-- 
+- By default, basic monitoring is enabled when you create the launch configuration using the AWS Management Console.
+- By default, detailed monitoring is enabled when  you create the launch configuration using AWS CLI or API.
 
 
 Load Balancer
@@ -13,6 +14,8 @@ Load Balancer
 - Default connection draining time is 300 seconds.
 - Deleting the load balancer will not affect registered targets. Instances will keep on running even after elb deletion.
 - Predefined security policy: SSL Protocols, SSL Options and SSL Ciphers.
+- Format of ELB access log file: bucket[/prefix]/AWSLogs/aws-account-id/elasticloadbalancing/region/yyyy/mm/dd/aws-account-id_elasticloadbalancing_region_load-balancer-id_end-time_ip-address_random-string.log.gz
+
 
 SNS
 - Available Endpoints: HTTP, HTTPS, Email, Email-JSON, Amazon SQS, Application AWS Lambda, SMS
@@ -23,7 +26,7 @@ IAM
 - A groups can be granted permissions using access control policies.
 - The best practise for IAM is to create roles which has specific access to an AWS service and then give the user permission to the AWS service via the role.
 - If its a combination of various services, there will be large number of groups and might not be maintainable. Hence, role for service and ability for user to take up the role and ability to change roles would be much cleaner.
-
+- You can actually use a Deny condition which will not allow the person to log in from outside.(look for Condition: NotIpAddress)
 
 EBS
 - Default limit of EBS snapshot is 10,000.
