@@ -41,6 +41,11 @@ EC2
 - A bastion host is a special purpose computer on a network specifically designed and configured to withstand attacks. The computer generally hosts a single application, for example a proxy server, and all other services are removed or limited to reduce the threat to the computer.
   In AWS, A bastion host is kept on a public subnet. Users log on to the bastion host via SSH or RDP and then use that session to manage other hosts in the private subnets.
   You can have a bastion host running in multiple AZ, but the recommendation is to have one running in each AZ. Hence you need to make sure that the Autoscaling group is set to a maz-size of one.
+- An instance reboot is equivalent to an operating system reboot. In most cases, it takes only a few minutes to reboot your instance, it remains on the same physical host, so your instance keeps its public DNS name (IPv4), private IPv4 address, IPv6 address (if applicable), and any data on its instance store volumes.
+- While creating AMI, ensure that you have following credentials:
+  => Your Account ID.
+  => An X.509 certificate and corresponding private key.
+  => Your AWS account access key ID and secret access key.
 - 
 
 S3
@@ -69,7 +74,7 @@ CloudFormation
   => An optional list of data tables used to lookup static configuration values (e.g AMI names)
   => The list of AWS resources and their conf value
   => A template file format version number
-
+- By default, the "automatic rollback on error" feature is enabled.
 VPC
 - Go through CIDR properly.
 - When you design a web server and db server, the security group must be defined so that the webserver can talk to db server whereas while communicating through subnets you need to define network ACL.
@@ -100,6 +105,9 @@ Billing
   => By product or product resource.
   => By tags that you define yourself.
 - Cost Explorer helps to get more details on spendings.
+- A tag is a label that you or AWS assigns to an AWS resource. Each tag consists of a key and a value. A key can have more than one value. You can use tags to organize your resources, and cost allocation tags to track your AWS costs on a detailed level.
+- After you activate cost allocation tags, AWS uses the cost allocation tags to organize your resource costs on your cost allocation report, to make it easier for you to categorize and track your AWS costs.
+
 
 CloudWatch
 - You can publish your own metrics to CloudWatch using the AWS CLI or an API.
@@ -115,6 +123,9 @@ CloudWatch
   => Sum
   => Data Samples
 - By default, there would always be network in, network out and CPU Utilization but teh DisRead (bytes) would remain 0.
+- You can set custome bounds for the Y axis on a graph to help you see the data better. For eg, you can change the bounds on a CPUUtilization graph to 100 percent so that it's easy to see whether the CPU is low or high.
+- You can switch between two different Y axes for your graph. This is particular useful if the graph contains metrics that have different units or that differ greatly in their range of values.
+- 
 
 CloudTrail
 - AWS CloudTrail is the defacto service provided by AWS for monitoring all API calls to AWS and is used for logging and monitoring purposes for compliance. Amazon CloudTrail detects every call made to AWS and creates a log which can then be further used for analysis.
