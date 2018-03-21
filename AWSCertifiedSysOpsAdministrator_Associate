@@ -51,6 +51,7 @@ EC2
   => An X.509 certificate and corresponding private key.
   => Your AWS account access key ID and secret access key.
 - For each instance there is a property called State transition reason. This will show the user the reason as to why an EC2 instance would have been terminated.
+- When EC2 instance fails to launch. 
 
 S3
 - buckets ACL permission
@@ -66,7 +67,14 @@ S3
   => Quick recovery from any network issues - smaller part size minimized the impact of restarting a failed upload due to network error.
   => Pause and resume object uploads - you can upload object parts over time. Once you initiate a multipart upload there is no expirey; you must explicitly complete or abort the multipart upload.
   => Begin an upload before you know the final object size - you can upload an object as you are creating it.
-
+- Bucket policies are limited to 20KB in size.
+- Access Policy Language Overview
+  Common Elements in an Access Policy
+  => Resources: Buckets and objects are the Amazon S3 resources for which you can allow or deny permissions. In a policy, you use the Amazon Resource Name (ARN) to identify the resource.
+  => Actions: For each resource, Amazon S3 supports a set of operations.
+  => Effect: What the effect will be when the user requests the specific action - This can be either allow or deny.
+  => Principal: The account or user who is allowed access to the actions and resources in the statement. In a bucket policy, the principal is the user, account, service or other entity who is the recipient of this permission.
+  
 
 CloudFormation
 - You can use WaitCondition for situation like following:
