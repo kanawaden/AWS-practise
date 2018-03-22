@@ -31,6 +31,7 @@ IAM
 
 EBS
 - Default limit of EBS snapshot is 10,000.
+- EBS snapshots - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSSnapshots.html
 
 EC2
 - AWS Tags enables you to categorise your AWS resources in different ways. As per AWS below are the restrictions on tags - 
@@ -87,12 +88,18 @@ CloudFormation
   => The list of AWS resources and their conf value
   => A template file format version number
 - By default, the "automatic rollback on error" feature is enabled.
+
 VPC
 - Go through CIDR properly.
 - When you design a web server and db server, the security group must be defined so that the webserver can talk to db server whereas while communicating through subnets you need to define network ACL.
 - Elastic Network Interface is a logical networking component in a VPC that represents a virtual network card.
-- 
+- An Elastic IP address is a static IPv4 address designed for dynamic cloud computing. An Elastic IP address is associated with your AWS acount. With an Elastic IP address, you can mask the failure of an instance or software by rapidly remapping the address to another instance in your account.
 
+Route53
+- Go through all the Routing policies
+- If your application is hosted on Amazon EC2 instances in multiple Amazon EC2 regions, you can reduce latency for your users by serving their requests from the Amazon EC2 region for which network latency is lowest. Amazon Route 53 latency based routing lets you use DNS to route user requests to the Amazon EC2 region that will give your users the fastest response. 
+  The Evaluate Target health check will ensure availability. If any one of the regions fails, since the evaluate target is set to true, the requests will be sent to another region.
+- 
 
 RDS
 - In a multi AZ deployment, Amazon RDS automatically provisions and maintains a synchronous standby replica in a different Availability Zone. The primary instance is synchronously replicated across AZ to a standby replica to provide data redundancy, eliminate IO freezes and minimizes latency spikes during system backups.
