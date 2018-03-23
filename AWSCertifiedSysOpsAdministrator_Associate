@@ -35,6 +35,12 @@ EBS
 - Default limit of EBS snapshot is 10,000.
 - EBS snapshots - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSSnapshots.html
 - New EBS volumes receive their maximum performace the moment that they are available and do not require initialization (formerly known as pre-warming). However, storage blocks on volumes that were restored from snapshots must be initialized (pulled down from Amazon S3 and written to the volume) before you can access the block. This preliminary action takes time and can cause a significant increase in the latency of an I/O operation the first time each block is accessed.
+- Each instance that you launch has an associated root device volume, either an Amazon EBS volume or an instance store volume. You can use block device mapping to specify additional EBS volumes or instance store volumes to attach to an instance when it's launched.
+- Amazon EBS encryption offers a simple encryption solution for your EBS volumes without the need to build, maintain, and secure your own key management infrastructure. When you create an encrypted EBS volume and attach it to a supported instance type, the following types of data are encrypted:
+  => Data at rest inside the volume
+  => All data moving between the volume and the instance
+  => All snapshots created from the volume
+  => All volumes created from those snapshots
 
 EC2
 - AWS Tags enables you to categorise your AWS resources in different ways. As per AWS below are the restrictions on tags - 
@@ -56,6 +62,9 @@ EC2
   => Your AWS account access key ID and secret access key.
 - For each instance there is a property called State transition reason. This will show the user the reason as to why an EC2 instance would have been terminated.
 - When EC2 instance fails to launch. 
+- You can prevent an instance from being terminated accidentally by someone using the AWS Management Console, the CLI, and the API. The feature is available for both Amazon EC2 instance store-backed and Amazon EBS-backed instances. Each instance has a DisableApiTermination attribute with the default value of false (the instance can be terminated through Amazon EC2). You can modify this instance attribute while the instance is running or stopped (in the case of Amazon EBS-backed instances).
+- For Windows instances, the instance console output displays the last three system event log errors.
+- A placement group is a logical grouping of instances within a single AZ. Placement groups are recommended for applications that benefit from low network latency, high network throughput or both.
 
 S3
 - Bucket policy and user policy are two of the access policy options available for you to grant permission to your Amazon S3 resources. Both uses JSON-based access policy language.
@@ -80,6 +89,10 @@ S3
   => Effect: What the effect will be when the user requests the specific action - This can be either allow or deny.
   => Principal: The account or user who is allowed access to the actions and resources in the statement. In a bucket policy, the principal is the user, account, service or other entity who is the recipient of this permission.
   
+Glacier
+- Objects archived to Amazon Glacier are not accessible in real-time. You must first initiate a restore request and then wait until a temporary copy of the object is available for the duration (number of days) that you specify in the request.
+- After you receive a temporary copy of the restored object, the object's storage class remains GLACIER (a GET or HEAD request will return GLACIER as the storage class). Note that when you restore an archive you pay for both the archive (GLACIER rate) and a copy you restored temporarily (RRS rate). 
+
 
 CloudFormation
 - You can use WaitCondition for situation like following:
@@ -113,6 +126,7 @@ RDS
 - By default AWS rotates the logs so its better to store it in database to ensure you archieve all the logs and you can then have the ability to find the errors by date.
 - If you want to have an encrypted database storage option, you need to store them on EBS volumes which can be encrypted.
 - Event Subscription Categories for RDS has below option: Creation, Deletion, Notification and Restoration.
+
 
 SQS
 - newly created queue structure : http://sqs.<aws-region>.amazonaws.com/<accountid>/<queue-name>
