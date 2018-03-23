@@ -7,7 +7,8 @@ AutoScaling
 - By default, basic monitoring is enabled when you create the launch configuration using the AWS Management Console.
 - By default, detailed monitoring is enabled when  you create the launch configuration using AWS CLI or API.
 - To terminate an instance using the CLI you need to use the terminate-instance-in-auto-scaling-group command. In this command, the user can specify the instance id which needs to be deleted. They need to mention the --no-should-decrement-desired-capacity option so that Autoscaling will launch instances with the new AMI configuration.
-
+- Once can change the status of an instance using Autoscaling commands. The command used here would be set-instance-health.
+- If you suspend AddToLoadBalancer, Auto Scaling launches the instances but does not add them to the laod balancer or target group. If you resume the AddToLoadBalancer process, Auto Scaling resumes adding instances to the load balancer or target group when they are launched. However, Auto Scaling does not add the instances that were launched while this process was suspended. You must register those instances manually.
 
 Load Balancer
 - To ensure that a classic load balancer stops sending requests to instances that are deregistered or unhealthy, while keeping the existing connection open, use connection draining. This enables load balancer to complete in-flight requests made to the instances that are deregistered or unhealthy.
@@ -16,6 +17,7 @@ Load Balancer
 - Deleting the load balancer will not affect registered targets. Instances will keep on running even after elb deletion.
 - Predefined security policy: SSL Protocols, SSL Options and SSL Ciphers.
 - Format of ELB access log file: bucket[/prefix]/AWSLogs/aws-account-id/elasticloadbalancing/region/yyyy/mm/dd/aws-account-id_elasticloadbalancing_region_load-balancer-id_end-time_ip-address_random-string.log.gz
+- One can add more AZ to the existing load balancer. From console, select ELB and go to instances tab to add AZ. From CLI, use enable-availability-zones-for-load-balancer command to add an Availability Zone.
 
 
 SNS
@@ -56,6 +58,7 @@ EC2
 - When EC2 instance fails to launch. 
 
 S3
+- Bucket policy and user policy are two of the access policy options available for you to grant permission to your Amazon S3 resources. Both uses JSON-based access policy language.
 - buckets ACL permission
   => Everyone
   => Any Authenticated AWS user
@@ -150,3 +153,10 @@ CloudWatch
 
 CloudTrail
 - AWS CloudTrail is the defacto service provided by AWS for monitoring all API calls to AWS and is used for logging and monitoring purposes for compliance. Amazon CloudTrail detects every call made to AWS and creates a log which can then be further used for analysis.
+
+Service Limits
+IAM 
+- 1 user max 10 groups.
+- 300 groups max per AWS account.
+- 5000 IAM users per AWS account.
+- 1000 roles per AWS account.
