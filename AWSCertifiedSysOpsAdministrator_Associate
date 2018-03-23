@@ -32,6 +32,7 @@ IAM
 EBS
 - Default limit of EBS snapshot is 10,000.
 - EBS snapshots - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSSnapshots.html
+- New EBS volumes receive their maximum performace the moment that they are available and do not require initialization (formerly known as pre-warming). However, storage blocks on volumes that were restored from snapshots must be initialized (pulled down from Amazon S3 and written to the volume) before you can access the block. This preliminary action takes time and can cause a significant increase in the latency of an I/O operation the first time each block is accessed.
 
 EC2
 - AWS Tags enables you to categorise your AWS resources in different ways. As per AWS below are the restrictions on tags - 
@@ -114,6 +115,7 @@ SQS
 - newly created queue structure : http://sqs.<aws-region>.amazonaws.com/<accountid>/<queue-name>
   for eg : http://sqs.us-east-1.amazonaws.com/123456123456/myqueue
 - You can configure the amazon SQS message retention period to a value between 1 min to 14 days (default is 4 days). Once the message retention limit is reached, messages are automatically deleted.
+- AWS reserve the right to delete a queue without notification if one of the following actions hasn't been performed on it for 30 consecutive days: SendMessage, ReceiveMessage, DeleteMessage, GetQueueAttributes, AddPermission and RemovePermission.
 - When you delete a queue which contains messages. It will just prompt a message showing there are messages in a queue but after which it will just delete the queue.
 -
 
