@@ -1,0 +1,72 @@
+properties([
+    parameters([
+    choice(choices: ['DEV'], description: 'Which Environemnt?', name: 'ENVIRONMENT')
+])
+])
+ 
+ stage('Clone Repo'){
+    node('master'){
+      cleanWs()
+
+      //checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github_cred', url: 'https://1521a0ff5f8852dc06bd262708d24a66853d598a@github.developer.allianz.io/ads-it/ABS_SCBbanca.git']]])
+    withCredentials([string(credentialsId: 'github_token', variable: 'GITHUB_TOKEN')]) {
+      checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github_cred', url: "$GITHUB_TOKEN"]]])    
+    }
+  }
+     
+ }
+  
+  
+ stage('mvn build'){
+    node('master'){
+    
+       dir("${WORKSPACE}/dispatcher/scb.allianz.dispatcher.parent/") {
+ 
+        withMaven(maven: 'mvn-3.06', jdk: 'java' , tempBinDir: '') {
+        sh "mvn clean install --settings settings_cloud.xml -DproxySet=true -DproxyHost=proxy.ase1.aws.aztec.cloud.allianz -DproxyPort=8888 -Dhttp.nonProxyHosts=10.251.20.179 sonar:sonar -Dsonar.host.url=http://10.251.20.179:9000 -Dsonar.login=6690089c8a82788b6b95e0ddc834e4c7d67b211b "
+        }
+        
+        
+ 
+
+
+    }
+    
+      dir("${WORKSPACE}/dispatcher/scb.allianz.dispatcher.contract/") {
+ 
+        sh """
+        if [ -f ${WORKSPACE}/dispatcher/scb.allianz.dispatcher.contract/target/scb.allianz.dispatcher.contract.war ]
+            then
+            echo "war file exists"
+        else   
+        echo "war does not exists"
+        exit 1
+        fi
+        """
+
+    }
+
+    }    
+
+  }
+  
+  stage('Deploy Dev Tomcat server'){
+         node('master'){
+        
+         sshagent(credentials: ['tomcat'], ignoreMissing: true) {
+          sh "ssh -o StrictHostKeyChecking=no -l -t ec2-user@10.251.4.59 sudo echo 'SCPing' "
+          sh "scp ${WORKSPACE}/target/scb.allianz.dispatcher.contract.war ec2-user@10.251.4.59:/tmp/"
+          sh "ssh -o StrictHostKeyChecking=no -l -t ec2-user@10.251.4.59 sudo chown root:root /tmp/scb.allianz.dispatcher.contract.war"
+          sh "ssh -o StrictHostKeyChecking=no -l -t ec2-user@10.251.4.59 sudo rm -rf /opt/tomcat/webapps/scb.allianz.dispatcher.contract*"
+          sh "ssh -o StrictHostKeyChecking=no -l -t ec2-user@10.251.4.59 sudo cp -f /tmp/scb.allianz.dispatcher.contract.war /opt/tomcat/webapps/"
+           sh "ssh -o StrictHostKeyChecking=no -l -t ec2-user@10.251.4.59 sudo sh /opt/tomcat/bin/catalina.sh stop && sleep 5"
+          sh "ssh -o StrictHostKeyChecking=no -l -t ec2-user@10.251.4.59 sudo sh /opt/tomcat/bin/catalina.sh run &"
+          sh "ssh -o StrictHostKeyChecking=no -l -t ec2-user@10.251.4.59 sudo rm -rf /tmp/scb.allianz.dispatcher.contract.war"
+         sh "ssh -o StrictHostKeyChecking=no -l -t ec2-user@10.251.4.59 sudo sleep 10"
+
+        // sh /opt/tomcat/bin/catalina.sh run , sh /opt/tomcat/bin/catalina.sh stop
+         
+        }
+    }
+
+    } 
